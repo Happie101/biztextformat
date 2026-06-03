@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Text Formatter & Word Counter — BizTextFormat</title>
+<meta name="description" content="Free online text formatter and word counter. Clean, format and analyse your text instantly. Remove extra spaces, fix capitalisation, count words, characters and sentences. No sign-up.">
+<meta name="keywords" content="text formatter, word counter, character counter, online text formatter, free word counter, text cleaner, sentence counter, text case converter">
+<link rel="canonical" href="https://biztextformat.com/">
+<meta property="og:title" content="Free Text Formatter & Word Counter — BizTextFormat">
+<meta property="og:description" content="Format, clean and analyse your text instantly. Free, no sign-up.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"BizTextFormat","url":"https://biztextformat.com","description":"Free online text formatter, word counter and character counter.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7718343378574758" crossorigin="anonymous"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --violet:#7c3aed;--violet-d:#6d28d9;--violet-l:#f5f3ff;--violet-ll:#ede9fe;
+  --ink:#0f172a;--ink2:#334155;--ink3:#64748b;--ink4:#94a3b8;
+  --bg:#f8fafc;--bg2:#f1f5f9;--white:#fff;--border:#e2e8f0;--border2:#cbd5e1;
+  --green:#059669;--red:#dc2626;--amber:#d97706;
+  --r:8px;--r2:12px;--sh:0 1px 3px rgba(0,0,0,.08);--sh2:0 4px 6px -1px rgba(0,0,0,.08);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+
+nav{background:var(--ink);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;flex-shrink:0}
+.nav-brand{display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-icon{width:32px;height:32px;background:var(--violet);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.nav-name{font-weight:700;font-size:16px;color:#fff;letter-spacing:-.3px}
+.nav-name span{color:#c4b5fd}
+.nav-links{display:flex;gap:4px}
+.nav-link{padding:6px 12px;border-radius:var(--r);color:rgba(255,255,255,.7);font-size:13px;font-weight:500;text-decoration:none;transition:all .15s}
+.nav-link:hover{background:rgba(255,255,255,.1);color:#fff}
+
+.trust-bar{background:#faf5ff;border-bottom:1px solid #ddd6fe;padding:6px 24px;display:flex;align-items:center;gap:20px;font-size:12px;color:#5b21b6;flex-wrap:wrap;flex-shrink:0}
+@media(max-width:480px){.trust-bar{display:none}}
+
+.ad-leader{background:var(--white);border-bottom:1px solid var(--border);height:90px;display:flex;align-items:center;justify-content:center;color:var(--ink4);font-size:11px;letter-spacing:.5px;flex-shrink:0}
+
+.hero{text-align:center;padding:28px 24px 16px;max-width:680px;margin:0 auto}
+.hero h1{font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-1px;line-height:1.2;margin-bottom:8px}
+.hero h1 span{color:var(--violet)}
+.hero p{font-size:15px;color:var(--ink3)}
+
+/* MAIN LAYOUT */
+.app{display:grid;grid-template-columns:1fr 260px;gap:0;flex:1;max-width:1200px;margin:0 auto;width:100%;padding:16px 16px 32px}
+@media(max-width:768px){.app{grid-template-columns:1fr}}
+
+/* EDITOR PANEL */
+.editor-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh)}
+
+/* TOOLBAR */
+.toolbar{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tb-group{display:flex;gap:4px}
+.tb-sep{width:1px;background:var(--border);margin:0 4px;align-self:stretch}
+.tb-btn{padding:5px 10px;border:1px solid var(--border2);border-radius:var(--r);background:var(--white);font-size:12px;font-weight:500;cursor:pointer;color:var(--ink2);transition:all .15s;white-space:nowrap}
+.tb-btn:hover{background:var(--violet-l);border-color:var(--violet);color:var(--violet-d)}
+.tb-btn.active{background:var(--violet);color:#fff;border-color:var(--violet)}
+.tb-label{font-size:11px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;padding:0 4px;align-self:center}
+
+/* TEXTAREA */
+.editor-wrap{flex:1;position:relative}
+#editor{width:100%;height:420px;padding:18px;border:none;resize:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;line-height:1.7;color:var(--ink);background:var(--white);outline:none}
+#editor::placeholder{color:var(--ink4)}
+
+/* STATUS BAR */
+.status-bar{padding:8px 14px;background:var(--bg);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.status-stats{display:flex;gap:16px;flex-wrap:wrap}
+.stat-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ink3)}
+.stat-num{font-weight:700;font-size:14px;color:var(--ink);min-width:32px}
+.stat-reading{font-size:12px;color:var(--ink3)}
+
+/* COPY/CLEAR BUTTONS */
+.editor-actions{display:flex;gap:6px}
+.ea-btn{padding:6px 14px;border-radius:var(--r);font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.ea-copy{background:var(--violet);color:#fff}
+.ea-copy:hover{background:var(--violet-d)}
+.ea-clear{background:var(--bg2);color:var(--ink3)}
+.ea-clear:hover{background:#fee2e2;color:var(--red)}
+.ea-download{background:var(--bg2);color:var(--ink2)}
+.ea-download:hover{background:var(--violet-l);color:var(--violet-d)}
+
+/* RIGHT SIDEBAR */
+.sidebar{padding:0 0 0 16px;display:flex;flex-direction:column;gap:14px}
+@media(max-width:768px){.sidebar{padding:16px 0 0}}
+
+.side-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh)}
+.side-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);padding:12px 14px 8px;border-bottom:1px solid var(--border);background:var(--bg)}
+.side-body{padding:12px 14px}
+
+/* STATS GRID */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-card{background:var(--bg);border-radius:var(--r);padding:10px 12px;text-align:center}
+.stat-card .num{font-size:22px;font-weight:800;color:var(--violet-d);line-height:1}
+.stat-card .lbl{font-size:11px;color:var(--ink3);margin-top:2px}
+
+/* FREQUENCY */
+.freq-list{max-height:160px;overflow-y:auto}
+.freq-item{display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-size:12px}
+.freq-item:last-child{border-bottom:none}
+.freq-word{color:var(--ink2);font-weight:500}
+.freq-bar-wrap{flex:1;height:4px;background:var(--bg2);border-radius:2px;margin:0 8px;overflow:hidden}
+.freq-bar{height:100%;background:var(--violet);border-radius:2px}
+.freq-count{color:var(--ink4);min-width:20px;text-align:right}
+
+/* FIND & REPLACE */
+.fr-input{width:100%;padding:7px 10px;border:1.5px solid var(--border2);border-radius:var(--r);font-size:13px;margin-bottom:6px;font-family:inherit}
+.fr-input:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.fr-btn{width:100%;padding:8px;border:none;border-radius:var(--r);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;margin-bottom:4px}
+.fr-replace{background:var(--violet);color:#fff}
+.fr-replace:hover{background:var(--violet-d)}
+.fr-replace-all{background:var(--bg2);color:var(--ink2)}
+.fr-replace-all:hover{background:var(--violet-l);color:var(--violet-d)}
+.fr-result{font-size:11px;color:var(--ink4);text-align:center;margin-top:4px}
+
+/* PROMO */
+.promo-card{background:linear-gradient(135deg,var(--violet) 0%,var(--violet-d) 100%);border-radius:var(--r2);padding:16px;color:#fff;text-align:center}
+.promo-card h4{font-size:13px;font-weight:700;margin-bottom:6px}
+.promo-card p{font-size:12px;opacity:.85;margin-bottom:10px;line-height:1.5}
+.promo-links{display:flex;flex-direction:column;gap:6px}
+.promo-link{padding:7px;border-radius:var(--r);font-size:12px;font-weight:600;text-decoration:none;transition:all .15s;text-align:center}
+.promo-link-white{background:#fff;color:var(--violet-d)}
+.promo-link-ghost{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
+
+.ad-rect-wrap{background:var(--bg);border:2px dashed var(--border2);border-radius:var(--r);height:250px;display:flex;align-items:center;justify-content:center;color:var(--ink4);font-size:11px;letter-spacing:.5px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:var(--r);font-size:13px;font-weight:500;z-index:300;box-shadow:var(--sh2);transition:opacity .3s;pointer-events:none}
+
+footer{background:var(--ink);padding:16px 24px;text-align:center;font-size:12px;color:rgba(255,255,255,.4);flex-shrink:0}
+footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 8px}
+footer a:hover{color:#fff}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#" aria-label="BizTextFormat home">
+    <div class="nav-icon" aria-hidden="true">📝</div>
+    <span class="nav-name">BizText<span>Format</span></span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="https://bizinvoicegen.com" target="_blank" rel="noopener">Free Invoices</a>
+    <a class="nav-link" href="https://bizmargin.com" target="_blank" rel="noopener">Margin Calc</a>
+    <a class="nav-link" href="https://bizqrgen.com" target="_blank" rel="noopener">QR Codes</a>
+  </div>
+</nav>
+
+<div class="trust-bar" role="note">
+  <span>🔒 No sign-up required</span>
+  <span>⚡ Instant formatting</span>
+  <span>💾 Works offline</span>
+  <span>✅ 100% free</span>
+</div>
+
+<div class="ad-leader" role="complementary" aria-label="Advertisement"><!-- AdSense 728×90 -->Advertisement · 728×90</div>
+
+<div class="hero">
+  <h1>Free <span>Text Formatter</span> & Word Counter</h1>
+  <p>Format, clean and analyse your text instantly. Perfect for writers, students, marketers and developers.</p>
+</div>
+
+<div class="app">
+
+  <!-- EDITOR PANEL -->
+  <div class="editor-panel">
+
+    <!-- TOOLBAR -->
+    <div class="toolbar" role="toolbar" aria-label="Text formatting tools">
+      <span class="tb-label">Case</span>
+      <div class="tb-group">
+        <button class="tb-btn" onclick="applyCase('upper')" title="UPPERCASE">AA</button>
+        <button class="tb-btn" onclick="applyCase('lower')" title="lowercase">aa</button>
+        <button class="tb-btn" onclick="applyCase('title')" title="Title Case">Aa</button>
+        <button class="tb-btn" onclick="applyCase('sentence')" title="Sentence case">A_</button>
+        <button class="tb-btn" onclick="applyCase('alternate')" title="aLtErNaTe">aA</button>
+        <button class="tb-btn" onclick="applyCase('inverse')" title="iNVERSE">Ai</button>
+      </div>
+      <div class="tb-sep"></div>
+      <span class="tb-label">Clean</span>
+      <div class="tb-group">
+        <button class="tb-btn" onclick="clean('spaces')" title="Remove extra spaces">Spaces</button>
+        <button class="tb-btn" onclick="clean('lines')" title="Remove blank lines">Blank lines</button>
+        <button class="tb-btn" onclick="clean('trim')" title="Trim each line">Trim lines</button>
+        <button class="tb-btn" onclick="clean('duplicates')" title="Remove duplicate lines">Duplicates</button>
+        <button class="tb-btn" onclick="clean('html')" title="Strip HTML tags">Strip HTML</button>
+        <button class="tb-btn" onclick="clean('numbers')" title="Remove numbers">No numbers</button>
+        <button class="tb-btn" onclick="clean('punct')" title="Remove punctuation">No punct</button>
+        <button class="tb-btn" onclick="clean('emoji')" title="Remove emoji">No emoji</button>
+      </div>
+      <div class="tb-sep"></div>
+      <span class="tb-label">Sort</span>
+      <div class="tb-group">
+        <button class="tb-btn" onclick="sortLines('az')" title="Sort A→Z">A→Z</button>
+        <button class="tb-btn" onclick="sortLines('za')" title="Sort Z→A">Z→A</button>
+        <button class="tb-btn" onclick="sortLines('reverse')" title="Reverse lines">Reverse</button>
+        <button class="tb-btn" onclick="sortLines('shuffle')" title="Shuffle lines">Shuffle</button>
+      </div>
+      <div class="tb-sep"></div>
+      <span class="tb-label">Wrap</span>
+      <div class="tb-group">
+        <button class="tb-btn" onclick="wrapText('quotes')" title="&quot;Wrap in quotes&quot;">"  "</button>
+        <button class="tb-btn" onclick="wrapText('brackets')" title="[Wrap in brackets]">[ ]</button>
+        <button class="tb-btn" onclick="wrapText('parens')" title="(Wrap in parens)">( )</button>
+        <button class="tb-btn" onclick="wrapText('backtick')" title="\`code wrap\`">` `</button>
+      </div>
+      <div class="tb-sep"></div>
+      <span class="tb-label">Encode</span>
+      <div class="tb-group">
+        <button class="tb-btn" onclick="encode('url')" title="URL encode">URL</button>
+        <button class="tb-btn" onclick="encode('base64')" title="Base64 encode">B64</button>
+        <button class="tb-btn" onclick="encode('html')" title="HTML encode">HTML</button>
+        <button class="tb-btn" onclick="encode('slug')" title="Convert to slug">Slug</button>
+      </div>
+    </div>
+
+    <!-- TEXTAREA -->
+    <div class="editor-wrap">
+      <textarea id="editor"
+        placeholder="Paste or type your text here...&#10;&#10;Use the toolbar above to format, or check your stats on the right.&#10;&#10;• Count words, characters, sentences and paragraphs&#10;• Remove extra spaces, blank lines, HTML tags&#10;• Convert case, sort lines, find & replace&#10;• Download as .txt or copy with one click"
+        oninput="updateStats()"
+        onpaste="setTimeout(updateStats,10)"
+        aria-label="Text input area"
+        spellcheck="true"></textarea>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+      <div class="status-stats" role="status" aria-live="polite" aria-label="Text statistics">
+        <div class="stat-item"><span class="stat-num" id="s-words">0</span><span>words</span></div>
+        <div class="stat-item"><span class="stat-num" id="s-chars">0</span><span>chars</span></div>
+        <div class="stat-item"><span class="stat-num" id="s-chars-ns">0</span><span>no spaces</span></div>
+        <div class="stat-item"><span class="stat-num" id="s-sents">0</span><span>sentences</span></div>
+        <div class="stat-item"><span class="stat-num" id="s-paras">0</span><span>paragraphs</span></div>
+        <div class="stat-item stat-reading"><span id="s-read">0 min read</span></div>
+      </div>
+      <div class="editor-actions">
+        <button class="ea-btn ea-download" onclick="downloadTxt()" title="Download as .txt">⬇️ .txt</button>
+        <button class="ea-btn ea-clear" onclick="clearAll()" title="Clear all text">🗑 Clear</button>
+        <button class="ea-btn ea-copy" onclick="copyAll()" title="Copy all text">📋 Copy</button>
+      </div>
+    </div>
+
+  </div><!-- /editor-panel -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- STATS GRID -->
+    <div class="side-card">
+      <div class="side-title">📊 Stats</div>
+      <div class="side-body">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="num" id="sb-words">0</div><div class="lbl">Words</div></div>
+          <div class="stat-card"><div class="num" id="sb-chars">0</div><div class="lbl">Characters</div></div>
+          <div class="stat-card"><div class="num" id="sb-sents">0</div><div class="lbl">Sentences</div></div>
+          <div class="stat-card"><div class="num" id="sb-paras">0</div><div class="lbl">Paragraphs</div></div>
+          <div class="stat-card"><div class="num" id="sb-lines">0</div><div class="lbl">Lines</div></div>
+          <div class="stat-card"><div class="num" id="sb-read">0</div><div class="lbl">Min read</div></div>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:var(--ink4);text-align:center" id="sb-unique"></div>
+      </div>
+    </div>
+
+    <!-- FIND & REPLACE -->
+    <div class="side-card">
+      <div class="side-title">🔍 Find & Replace</div>
+      <div class="side-body">
+        <input class="fr-input" type="text" id="fr-find" placeholder="Find..." aria-label="Find text">
+        <input class="fr-input" type="text" id="fr-replace" placeholder="Replace with..." aria-label="Replace with">
+        <div style="display:flex;gap:4px;margin-bottom:6px">
+          <label style="font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:4px;cursor:pointer">
+            <input type="checkbox" id="fr-case" style="width:auto"> Case sensitive
+          </label>
+          <label style="font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:8px">
+            <input type="checkbox" id="fr-regex" style="width:auto"> Regex
+          </label>
+        </div>
+        <button class="fr-btn fr-replace" onclick="findReplace(false)">Replace next</button>
+        <button class="fr-btn fr-replace-all" onclick="findReplace(true)">Replace all</button>
+        <div class="fr-result" id="fr-result" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- WORD FREQUENCY -->
+    <div class="side-card">
+      <div class="side-title">📈 Word Frequency</div>
+      <div class="side-body" style="padding:8px 14px">
+        <div class="freq-list" id="freq-list" aria-label="Word frequency analysis">
+          <div style="color:var(--ink4);font-size:12px;text-align:center;padding:12px 0">Type some text to see word frequency</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROMO -->
+    <div class="promo-card">
+      <h4>More Free Business Tools</h4>
+      <p>Invoices, QR codes and margin calculators — all free.</p>
+      <div class="promo-links">
+        <a href="https://bizinvoicegen.com" class="promo-link promo-link-white" target="_blank" rel="noopener">Free Invoice Generator</a>
+        <a href="https://bizmargin.com" class="promo-link promo-link-ghost" target="_blank" rel="noopener">Profit Margin Calculator</a>
+        <a href="https://bizqrgen.com" class="promo-link promo-link-ghost" target="_blank" rel="noopener">QR Code Generator</a>
+      </div>
+    </div>
+
+    <!-- AD -->
+    <div class="ad-rect-wrap" role="complementary" aria-label="Advertisement"><!-- AdSense 300×250 -->Advertisement · 300×250</div>
+
+    <!-- HOSTING -->
+    <div style="font-size:12px;color:var(--ink3);padding:4px 0;line-height:1.7">
+      Need <a href="https://www.hostinger.com?REFERRALCODE=ACGMGKKMT9LE" target="_blank" rel="noopener sponsored" style="color:var(--violet);font-weight:600">reliable web hosting</a> for your business? Hostinger from $2.99/mo.
+    </div>
+
+  </div><!-- /sidebar -->
+
+</div><!-- /app -->
+
+<footer>
+  <div style="margin-bottom:6px">
+    <a href="#">Privacy Policy</a><a href="#">Terms</a>
+    <a href="https://bizinvoicegen.com" target="_blank" rel="noopener">Invoice Generator</a>
+    <a href="https://bizmargin.com" target="_blank" rel="noopener">Margin Calculator</a>
+    <a href="https://bizqrgen.com" target="_blank" rel="noopener">QR Code Generator</a>
+  </div>
+  © 2026 BizTextFormat.com — Free Text Formatter & Word Counter
+</footer>
+
+<script>
+const ed = () => document.getElementById('editor');
+
+// ===== STATS =====
+function updateStats() {
+  const t = ed().value;
+  const words = t.trim() ? t.trim().split(/\s+/).length : 0;
+  const chars = t.length;
+  const charsNS = t.replace(/\s/g,'').length;
+  const sents = t.trim() ? (t.match(/[.!?]+/g)||[]).length : 0;
+  const paras = t.trim() ? t.trim().split(/\n\s*\n/).filter(p=>p.trim()).length : 0;
+  const lines = t ? t.split('\n').length : 0;
+  const readMin = Math.max(1, Math.ceil(words / 200));
+
+  ['words','chars','chars-ns','sents','paras'].forEach((id,i) => {
+    const v = [words,chars,charsNS,sents,paras][i];
+    document.getElementById('s-'+id).textContent = v.toLocaleString();
+  });
+  document.getElementById('s-read').textContent = readMin + ' min read';
+
+  ['words','chars','sents','paras','lines','read'].forEach((id,i) => {
+    const el = document.getElementById('sb-'+id);
+    if(el) el.textContent = [words,chars,sents,paras,lines,readMin][i].toLocaleString();
+  });
+
+  // Unique words
+  const uniqueCount = t.trim() ? new Set(t.toLowerCase().match(/\b[a-z']+\b/g)||[]).size : 0;
+  document.getElementById('sb-unique').textContent = uniqueCount ? `${uniqueCount} unique words` : '';
+
+  updateFreq(t);
+  saveLocal();
+}
+
+function updateFreq(t) {
+  const el = document.getElementById('freq-list');
+  if(!t.trim()){el.innerHTML='<div style="color:var(--ink4);font-size:12px;text-align:center;padding:12px 0">Type some text to see word frequency</div>';return;}
+  const stopWords = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','could','should','may','might','shall','can','need','that','this','these','those','it','its','i','you','he','she','we','they','my','your','his','her','our','their','not','no','so','as','if','then','than','there','here','which','who','what','when','where','how','up','out','about','into','through','after','before','between','over','under','again','further','also','just','only','more','most','some','any','all','both','each','few','many','much','other','same','such']);
+  const words = (t.toLowerCase().match(/\b[a-z']{2,}\b/g)||[]).filter(w=>!stopWords.has(w));
+  const freq = {};
+  words.forEach(w => freq[w] = (freq[w]||0)+1);
+  const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  if(!top.length){el.innerHTML='';return;}
+  const max = top[0][1];
+  el.innerHTML = top.map(([w,c]) => `<div class="freq-item"><span class="freq-word">${esc(w)}</span><div class="freq-bar-wrap"><div class="freq-bar" style="width:${(c/max*100).toFixed(0)}%"></div></div><span class="freq-count">${c}</span></div>`).join('');
+}
+
+// ===== CASE =====
+function applyCase(type) {
+  let t = ed().value;
+  switch(type) {
+    case 'upper': t = t.toUpperCase(); break;
+    case 'lower': t = t.toLowerCase(); break;
+    case 'title': t = t.toLowerCase().replace(/(?:^|\s|[-–—])\S/g,c=>c.toUpperCase()); break;
+    case 'sentence': t = t.toLowerCase().replace(/(^\s*\w|[.!?]\s+\w)/g,c=>c.toUpperCase()); break;
+    case 'alternate': t = t.split('').map((c,i)=>i%2===0?c.toLowerCase():c.toUpperCase()).join(''); break;
+    case 'inverse': t = t.split('').map(c=>c===c.toUpperCase()?c.toLowerCase():c.toUpperCase()).join(''); break;
+  }
+  ed().value = t; updateStats(); toast('Case converted');
+}
+
+// ===== CLEAN =====
+function clean(type) {
+  let t = ed().value;
+  switch(type) {
+    case 'spaces': t = t.replace(/[ \t]+/g,' ').replace(/^ /gm,''); break;
+    case 'lines': t = t.replace(/\n\s*\n+/g,'\n\n').trim(); break;
+    case 'trim': t = t.split('\n').map(l=>l.trim()).join('\n'); break;
+    case 'duplicates': { const seen=new Set(); t = t.split('\n').filter(l=>{if(seen.has(l.trim()))return false;seen.add(l.trim());return true;}).join('\n'); break; }
+    case 'html': t = t.replace(/<[^>]+>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/&nbsp;/g,' '); break;
+    case 'numbers': t = t.replace(/[0-9]/g,''); break;
+    case 'punct': t = t.replace(/[^\w\s]/g,''); break;
+    case 'emoji': t = t.replace(/[\u{1F300}-\u{1FFFF}]/gu,'').replace(/[\u{2600}-\u{27BF}]/gu,''); break;
+  }
+  ed().value = t; updateStats(); toast('Text cleaned');
+}
+
+// ===== SORT =====
+function sortLines(type) {
+  let lines = ed().value.split('\n');
+  switch(type) {
+    case 'az': lines.sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase())); break;
+    case 'za': lines.sort((a,b)=>b.toLowerCase().localeCompare(a.toLowerCase())); break;
+    case 'reverse': lines.reverse(); break;
+    case 'shuffle': for(let i=lines.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[lines[i],lines[j]]=[lines[j],lines[i]];} break;
+  }
+  ed().value = lines.join('\n'); updateStats(); toast('Lines sorted');
+}
+
+// ===== WRAP =====
+function wrapText(type) {
+  const pairs = {quotes:['"','"'],brackets:['[',']'],parens:['(',')'],backtick:['`','`']};
+  const [o,c] = pairs[type];
+  const ta = ed();
+  const start = ta.selectionStart, end = ta.selectionEnd;
+  if(start !== end) {
+    const sel = ta.value.substring(start, end);
+    ta.value = ta.value.substring(0,start) + o + sel + c + ta.value.substring(end);
+  } else {
+    ed().value = o + ta.value + c;
+  }
+  updateStats(); toast('Text wrapped');
+}
+
+// ===== ENCODE =====
+function encode(type) {
+  let t = ed().value;
+  try {
+    switch(type) {
+      case 'url': t = encodeURIComponent(t); break;
+      case 'base64': t = btoa(unescape(encodeURIComponent(t))); break;
+      case 'html': t = t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); break;
+      case 'slug': t = t.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_-]+/g,'-').replace(/^-+|-+$/g,''); break;
+    }
+    ed().value = t; updateStats(); toast('Encoded');
+  } catch(e) { toast('Encode failed'); }
+}
+
+// ===== FIND & REPLACE =====
+function findReplace(all) {
+  const find = document.getElementById('fr-find').value;
+  const repl = document.getElementById('fr-replace').value;
+  const cs = document.getElementById('fr-case').checked;
+  const rx = document.getElementById('fr-regex').checked;
+  const res = document.getElementById('fr-result');
+  if(!find){res.textContent='Enter search text';return;}
+  let t = ed().value;
+  let count = 0;
+  try {
+    const flags = (cs?'':'i') + (all?'g':'');
+    const pattern = rx ? new RegExp(find, flags) : new RegExp(find.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), flags);
+    if(all) {
+      const newT = t.replace(pattern, () => { count++; return repl; });
+      ed().value = newT;
+      res.textContent = count ? `Replaced ${count} instance${count>1?'s':''}` : 'No matches found';
+    } else {
+      const match = pattern.exec(t);
+      if(match) {
+        ed().value = t.substring(0,match.index) + repl + t.substring(match.index+match[0].length);
+        res.textContent = 'Replaced 1 instance';
+        count = 1;
+      } else {
+        res.textContent = 'No match found';
+      }
+    }
+    if(count) updateStats();
+  } catch(e) { res.textContent = 'Invalid regex pattern'; }
+}
+
+// ===== ACTIONS =====
+function copyAll() {
+  const t = ed().value;
+  if(!t){toast('Nothing to copy');return;}
+  navigator.clipboard.writeText(t).then(()=>toast('✅ Copied!')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ Copied!');
+  });
+}
+
+function clearAll() {
+  if(ed().value && confirm('Clear all text?')){ed().value='';updateStats();toast('Cleared');}
+}
+
+function downloadTxt() {
+  const t = ed().value;
+  if(!t){toast('Nothing to download');return;}
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(t);
+  a.download = 'biztextformat-' + new Date().toISOString().split('T')[0] + '.txt';
+  a.click();
+  toast('⬇️ Downloaded');
+}
+
+// ===== LOCAL STORAGE =====
+const LS_KEY = 'biztextformat.v1.text';
+function saveLocal() { try{localStorage.setItem(LS_KEY, ed().value);}catch(e){} }
+function loadLocal() { try{const t=localStorage.getItem(LS_KEY);if(t){ed().value=t;updateStats();}}catch(e){} }
+
+// ===== TOAST =====
+function toast(msg) {
+  let t = document.getElementById('_toast');
+  if(!t){t=document.createElement('div');t.id='_toast';t.className='toast';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(()=>{t.style.opacity='0';},2000);
+}
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ===== KEYBOARD SHORTCUTS =====
+document.addEventListener('keydown', e => {
+  if((e.ctrlKey||e.metaKey) && e.key==='Enter') { copyAll(); e.preventDefault(); }
+});
+
+// ===== INIT =====
+window.addEventListener('DOMContentLoaded', () => {
+  loadLocal();
+  updateStats();
+});
+</script>
+</body>
+</html>
